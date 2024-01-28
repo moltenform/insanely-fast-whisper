@@ -86,7 +86,20 @@ parser.add_argument(
     type=str,
     help="Name of the pretrained model/ checkpoint to perform diarization. (default: pyannote/speaker-diarization)",
 )
-
+parser.add_argument(
+    "--min-speakers",
+    required=False,
+    type=int,
+    default=0,
+    help="Tell pyannote to set the min number of speakers for diarization. (default: unlimited)",
+)
+parser.add_argument(
+    "--max-speakers",
+    required=False,
+    type=int,
+    default=0,
+    help="Tell pyannote to limit the max number of speakers for diarization. (default: unlimited)",
+)
 
 def main():
     args = parser.parse_args()
@@ -129,7 +142,13 @@ def main():
         )
 
     if args.hf_token != "no_token":
-        speakers_transcript = diarize(args, outputs)
+        speakers_transcript = diarize(
+            args,
+            outputs,
+            min_speakers=args.min_speakers,
+            max_speakers=args.max_speakers,
+        )
+
         with open(args.transcript_path, "w", encoding="utf8") as fp:
             result = build_result(speakers_transcript, outputs)
             json.dump(result, fp, ensure_ascii=False)

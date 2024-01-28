@@ -6,10 +6,18 @@ from .diarize import post_process_segments_and_transcripts, diarize_audio, \
     preprocess_inputs
 
 
-def diarize(args, outputs):
+def diarize(args, outputs, min_speakers, max_speakers):
+    diarization_kwargs = {}
+    if min_speakers:
+        diarization_kwargs['min_speakers'] = min_speakers
+
+    if max_speakers:
+        diarization_kwargs['max_speakers'] = max_speakers
+
     diarization_pipeline = Pipeline.from_pretrained(
         checkpoint_path=args.diarization_model,
         use_auth_token=args.hf_token,
+        **diarization_kwargs
     )
     diarization_pipeline.to(
         torch.device("mps" if args.device_id == "mps" else f"cuda:{args.device_id}")
