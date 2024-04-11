@@ -1,0 +1,11 @@
+I created this PR to change the number of speakers,
+and got a working version ready to submit.
+Jan 27.
+
+Then on Feb 12 a similar PR was merged to master,
+https://github.com/moltenform/insanely-fast-whisper/commit/ffa858b1da125d8c2f62207cda17d5e8ddb8d33f
+felixcarmona committed on Feb 12.
+
+So, I guess someone else beat me to it!
+
+
